@@ -1,7 +1,7 @@
 variable "region" {
   type        = string
   default     = "ap-south-1"
-  description = "AWS region (ap-south-1 = Mumbai, closest to assess.hyrenet.in users)."
+  description = "AWS region to deploy into (pick the one closest to your users)."
 }
 
 variable "name" {
@@ -27,7 +27,7 @@ variable "private_subnet_ids" {
 
 variable "domain" {
   type        = string
-  default     = "assess.hyrenet.in"
+  default     = "sandboxes.example.com"
   description = "Public hostname for the control plane / candidate API."
 }
 
@@ -58,7 +58,7 @@ variable "control_instance_type" {
 
 variable "node_instance_type" {
   type        = string
-  default     = "c7g.4xlarge" # 16 vCPU / 32 GB Graviton — the density box from PRODUCTION.md §1
+  default     = "c7g.4xlarge" # 16 vCPU / 32 GB Graviton — good density-per-dollar for bursty, mostly-idle sandboxes
   description = "Sandbox-runner instance type."
 }
 

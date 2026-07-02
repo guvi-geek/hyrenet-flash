@@ -1,25 +1,25 @@
-# Hyrenet — TLS terminator + wildcard preview (production, in front of the orchestrator)
+# Flash — TLS terminator + wildcard preview (production, in front of the orchestrator)
 #
-# This is the deploy-time piece of Phase 2 that cannot be proven on localhost (it
-# needs the real assess.hyrenet.in domain + DNS). It is the production analogue of
+# This is the deploy-time piece that cannot be proven on localhost (it
+# needs a real domain + DNS). It is the production analogue of
 # v1's `*.preview.localhost` trick: Caddy terminates TLS and reverse-proxies every
 # request — API, candidate preview vhost, and the Vite HMR WebSocket — to the single
 # orchestrator port. The host-token preview scheme (token = left-most host label)
 # already works unchanged behind TLS; nothing about preview.go changes.
 #
-# Why Caddy and not just an ALB: Caddy gets a real *.preview.hyrenet.in wildcard
+# Why Caddy and not just an ALB: Caddy gets a real *.preview.example.com wildcard
 # cert from Let's Encrypt via the DNS-01 challenge automatically (ALB needs an ACM
 # cert you provision separately, and ALB host-based routing to one target group is
 # fine too — see deploy/README for the ALB variant). For a single node, Caddy is
 # the least moving parts.
 #
 # DNS (one-time, at your provider):
-#   A    assess.hyrenet.in          -> <node public IP>
-#   A    *.preview.assess.hyrenet.in -> <node public IP>   (wildcard, for previews)
+#   A    sandboxes.example.com          -> <node public IP>
+#   A    *.preview.sandboxes.example.com -> <node public IP>   (wildcard, for previews)
 #
 # Run the orchestrator with the public-facing names so the URLs it mints are right:
 #   AUTH_ENABLED=true \
-#   PREVIEW_DOMAIN=preview.assess.hyrenet.in \
+#   PREVIEW_DOMAIN=preview.sandboxes.example.com \
 #   PREVIEW_PORT=443 \
 #   SANDBOX_RUNTIME=runsc \
 #   LISTEN_ADDR=127.0.0.1:8090 \
@@ -30,11 +30,11 @@
 
 {
 	# email for Let's Encrypt expiry notices
-	email ops@hyrenet.in
+	email ops@example.com
 }
 
 # --- Control-plane API + dashboard origin ---
-assess.hyrenet.in {
+sandboxes.example.com {
 	encode zstd gzip
 	reverse_proxy 127.0.0.1:8090 {
 		# Stream dev-server + scoring output without buffering.
@@ -43,11 +43,11 @@ assess.hyrenet.in {
 }
 
 # --- Candidate preview vhost (wildcard) ---
-# Matches <token>.<session>.preview.assess.hyrenet.in. The orchestrator reads the
+# Matches <token>.<session>.preview.sandboxes.example.com. The orchestrator reads the
 # token from the host label and authorizes per-session; Caddy just needs the
 # wildcard cert and to pass the Host header through (reverse_proxy does by default),
 # including WebSocket upgrades for Vite HMR (also automatic).
-*.preview.assess.hyrenet.in {
+*.preview.sandboxes.example.com {
 	tls {
 		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 	}

@@ -48,8 +48,8 @@ func (s *server) sampleOnce(ctx context.Context) {
 
 // usage is the cost-proof endpoint. It reports billed sandbox-hours from the
 // session ledger and the MEASURED live density, then derives sandboxes-per-node
-// and $/sandbox-hour from the node cost model. This is the number to hold up next
-// to a Daytona invoice.
+// and $/sandbox-hour from the node cost model. This is the number to hold up
+// against a managed-provider invoice.
 func (s *server) usage(w http.ResponseWriter, r *http.Request) {
 	rows, err := s.store.UsageSummary(r.Context())
 	if err != nil {

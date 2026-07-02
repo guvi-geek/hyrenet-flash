@@ -95,8 +95,8 @@ CREATE TABLE IF NOT EXISTS assessment_windows (
 );
 CREATE INDEX IF NOT EXISTS aw_span ON assessment_windows (question_id, starts_at, ends_at);
 
--- SDK sandboxes: arbitrary user metadata attached at create time (E2B-style),
--- filterable on list. Sessions created by the assessment plane leave it empty.
+-- SDK sandboxes: arbitrary user metadata attached at create time, filterable
+-- on list. Sessions created by the assessment plane leave it empty.
 ALTER TABLE sessions ADD COLUMN IF NOT EXISTS metadata JSONB NOT NULL DEFAULT '{}';
 `
 
@@ -300,7 +300,7 @@ func (s *Store) ListSessions(ctx context.Context, limit int) ([]SessionRow, erro
 
 // QuestionUsage is billed sandbox time for one template. SandboxSeconds sums each
 // session's live duration (created_at → destroyed_at, or now for still-active ones)
-// — the "sold" hours you compare against a Daytona invoice.
+// — the "sold" hours you compare against a managed-provider invoice.
 type QuestionUsage struct {
 	QuestionID     string  `json:"question_id"`
 	Sessions       int     `json:"sessions"`

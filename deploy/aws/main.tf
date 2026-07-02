@@ -1,4 +1,4 @@
-# Hyrenet v2 on AWS — the deploy-time half of PRODUCTION.md Phase 3.
+# Flash v2 on AWS — the horizontal-scale deploy shape.
 #
 # Shape:
 #   Internet ─HTTPS(443, ACM)─> ALB ──> control-plane ASG (orchestrator :8090)

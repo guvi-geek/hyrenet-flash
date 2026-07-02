@@ -1,7 +1,7 @@
 // Package flash is the official Go SDK for the Flash sandbox engine — a
-// self-hosted E2B/Daytona-style platform: claim an isolated sandbox from a warm
-// pool in under 2 seconds, run commands in it, read and write its files, open
-// its live preview, and destroy it.
+// self-hosted sandbox platform: claim an isolated sandbox from a warm pool in
+// under 2 seconds, run commands in it, read and write its files, open its
+// live preview, and destroy it.
 //
 // Quick start:
 //

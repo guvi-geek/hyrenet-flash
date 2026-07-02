@@ -1,7 +1,8 @@
 // Package metrics is the orchestrator's Prometheus surface. It exists to make the
-// cost claim falsifiable: every number behind "cheaper than Daytona" — warm depth,
-// claim latency, live density (real memory per sandbox) — is a measured series here,
-// not a slide. Scrape /metrics, or read the derived $/sandbox-hr from /v1/usage.
+// cost claim falsifiable: every number behind "cheaper than a managed provider" —
+// warm depth, claim latency, live density (real memory per sandbox) — is a
+// measured series here, not a slide. Scrape /metrics, or read the derived
+// $/sandbox-hr from /v1/usage.
 package metrics
 
 import (

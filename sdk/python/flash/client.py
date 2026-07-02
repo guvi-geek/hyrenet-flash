@@ -1,7 +1,7 @@
 """Flash SDK client — mirrors the Go SDK surface 1:1.
 
 Every service hangs off :class:`Flash`: ``client.sandboxes`` (the core
-E2B-style surface), ``client.templates``, ``client.api_keys``, and
+sandbox surface), ``client.templates``, ``client.api_keys``, and
 ``client.assessments`` (the submit → score layer on top).
 """
 

@@ -13,8 +13,8 @@ import (
 	"github.com/guvi-geek/hyrenet-flash/internal/store"
 )
 
-// The /v1/sandboxes API is the generic, SDK-facing surface — the E2B/Daytona
-// shape: create a sandbox from a template, run commands in it, read/write its
+// The /v1/sandboxes API is the generic, SDK-facing surface: create a sandbox
+// from a template, run commands in it, read/write its
 // files, reach its preview, kill it. It is the OPERATOR plane end to end (every
 // route requires an org API key); the session-token candidate plane stays what
 // it was. Under the hood a sandbox IS a session — same pool, same ledger, same

@@ -1,8 +1,8 @@
 # Flash v2 on AWS (Terraform)
 
-The deploy-time half of [PRODUCTION.md](../../PRODUCTION.md) Phase 3 — the parts
-that need a real AWS account (VPC, ACM, AMIs, RDS/ElastiCache) and so cannot be
-run on a laptop, the same boundary as TLS. The config is `terraform validate`-clean.
+The horizontal-scale deploy shape — the parts that need a real AWS account (VPC,
+ACM, AMIs, RDS/ElastiCache) and so cannot be run on a laptop, the same boundary
+as TLS. The config is `terraform validate`-clean.
 
 ```
 Internet ─HTTPS:443 (ACM)─▶ ALB ─▶ control-plane ASG (orchestrator :8090, CLUSTER mode)
@@ -15,9 +15,9 @@ Internet ─HTTPS:443 (ACM)─▶ ALB ─▶ control-plane ASG (orchestrator :80
 
 | Resource | Why |
 |---|---|
-| ALB + HTTPS listener (ACM) + HTTP→HTTPS redirect | TLS termination for `assess.hyrenet.in` |
+| ALB + HTTPS listener (ACM) + HTTP→HTTPS redirect | TLS termination for the control-plane domain |
 | Route53 apex A-record **and** `*.preview.<domain>` | sandbox previews resolve to the same ALB; the orchestrator splits the vhost |
-| Target group health check on **`/readyz`** | a draining/warming box is pulled from rotation (Phase 0 readiness) |
+| Target group health check on **`/readyz`** | a draining/warming box is pulled from rotation |
 | Control-plane ASG (no Docker) | runs the orchestrator in `CLUSTER_MODE=true` |
 | Node-agent ASG (`min`..`max`) | the sandbox fleet; golden AMI = Docker + gVisor + images pre-pulled (L3 ≈ 60–90s) |
 | **Termination lifecycle hook → drain** | scale-in SIGTERMs the node-agent, which finishes ACTIVE sessions before the instance dies (`scripts/node-drain-check.sh`) |

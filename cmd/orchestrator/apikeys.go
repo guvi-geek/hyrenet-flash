@@ -9,7 +9,7 @@ import (
 )
 
 // API-key lifecycle: named keys an org creates, lists, and revokes from the
-// dashboard or the SDK — the credential-management surface an E2B/Daytona-style
+// dashboard or the SDK — the credential-management surface a sandbox-as-a-service
 // product needs before keys go to real users. The raw key is returned exactly
 // once at creation (only its SHA-256 is stored); the list shows name + display
 // prefix + last use, never the key.

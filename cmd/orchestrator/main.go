@@ -168,7 +168,7 @@ func main() {
 	mux.HandleFunc("DELETE /v1/sessions/{id}", s.requireOrg(s.destroySession))
 	mux.HandleFunc("GET /v1/sessions/{id}", s.requireOrg(s.getSession)) // returns session_token: operator-only
 	mux.HandleFunc("GET /v1/sessions", s.requireOrg(s.listSessions))
-	// Generic sandbox API — the SDK-facing (E2B/Daytona-shape) surface. All org-key.
+	// Generic sandbox API — the SDK-facing surface. All org-key.
 	mux.HandleFunc("POST /v1/sandboxes", s.requireOrg(s.createSandbox))
 	mux.HandleFunc("GET /v1/sandboxes", s.requireOrg(s.listSandboxes))
 	mux.HandleFunc("GET /v1/sandboxes/{id}", s.requireOrg(s.getSandbox))
