@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/pool"
 )
 
 type ctxKey int

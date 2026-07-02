@@ -10,10 +10,10 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/cluster"
-	dk "github.com/guvi-geek/hyrenet-flash/internal/docker"
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/cluster"
+	dk "github.com/guvi-geek/flash/internal/docker"
+	"github.com/guvi-geek/flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 // Scorer resource limits. The frontend vitest harness spawns a worker pool +

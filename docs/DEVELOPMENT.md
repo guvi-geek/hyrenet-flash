@@ -17,8 +17,8 @@ architecture overview and API reference, see the main [`README.md`](../README.md
 ## 1. Clone and install dependencies
 
 ```bash
-git clone https://github.com/guvi-geek/hyrenet-flash.git
-cd hyrenet-flash
+git clone https://github.com/guvi-geek/flash.git
+cd flash
 go mod download
 cd dashboard && npm install && cd ..
 cd sdk/python && pip install -e '.[dev]' && cd ../..

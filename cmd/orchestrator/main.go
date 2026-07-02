@@ -20,12 +20,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/cluster"
-	"github.com/guvi-geek/hyrenet-flash/internal/dashboard"
-	dk "github.com/guvi-geek/hyrenet-flash/internal/docker"
-	"github.com/guvi-geek/hyrenet-flash/internal/metrics"
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/cluster"
+	"github.com/guvi-geek/flash/internal/dashboard"
+	dk "github.com/guvi-geek/flash/internal/docker"
+	"github.com/guvi-geek/flash/internal/metrics"
+	"github.com/guvi-geek/flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 type server struct {

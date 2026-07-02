@@ -26,10 +26,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/cluster"
-	dk "github.com/guvi-geek/hyrenet-flash/internal/docker"
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
-	"github.com/guvi-geek/hyrenet-flash/internal/templates"
+	"github.com/guvi-geek/flash/internal/cluster"
+	dk "github.com/guvi-geek/flash/internal/docker"
+	"github.com/guvi-geek/flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/templates"
 )
 
 type agent struct {

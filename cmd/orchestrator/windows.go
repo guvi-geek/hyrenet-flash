@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 // createWindow books a pre-warm window for a template (operator plane). The

@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 // The /v1/sandboxes API is the generic, SDK-facing surface: create a sandbox

@@ -1,4 +1,4 @@
-module github.com/guvi-geek/hyrenet-flash
+module github.com/guvi-geek/flash
 
 go 1.25.0
 

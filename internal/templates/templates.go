@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/pool"
 )
 
 // Template is a question's image + pool config + display metadata.

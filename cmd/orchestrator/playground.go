@@ -6,7 +6,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 // The playground is the candidate IDE: a Monaco editor that reads/writes the live

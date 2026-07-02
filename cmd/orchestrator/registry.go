@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/pool"
-	"github.com/guvi-geek/hyrenet-flash/internal/templates"
+	"github.com/guvi-geek/flash/internal/pool"
+	"github.com/guvi-geek/flash/internal/templates"
 )
 
 // registry is the runtime-mutable set of templates. v1 seeds it from the static

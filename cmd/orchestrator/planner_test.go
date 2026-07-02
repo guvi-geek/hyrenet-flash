@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 func TestWindowPhase(t *testing.T) {

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
-	"github.com/guvi-geek/hyrenet-flash/internal/templates"
+	"github.com/guvi-geek/flash/internal/store"
+	"github.com/guvi-geek/flash/internal/templates"
 )
 
 // Template and the default set now live in internal/templates (shared with the

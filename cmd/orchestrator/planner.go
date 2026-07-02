@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/guvi-geek/hyrenet-flash/internal/metrics"
-	"github.com/guvi-geek/hyrenet-flash/internal/store"
+	"github.com/guvi-geek/flash/internal/metrics"
+	"github.com/guvi-geek/flash/internal/store"
 )
 
 // planner drives scheduled scaling: it reconciles each template's warm floor

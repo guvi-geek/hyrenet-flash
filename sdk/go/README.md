@@ -6,7 +6,7 @@ under 2 seconds, run commands, read/write files, open a live browser preview,
 and destroy it. Dependency-free (stdlib only), fully context-aware.
 
 ```go
-import flash "github.com/guvi-geek/hyrenet-flash/sdk/go"
+import flash "github.com/guvi-geek/flash/sdk/go"
 
 client, _ := flash.New() // FLASH_API_KEY + FLASH_BASE_URL from env
 

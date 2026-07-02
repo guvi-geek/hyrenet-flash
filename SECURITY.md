@@ -8,7 +8,7 @@ public GitHub issue**. Instead, report it privately:
 - Email **arun@hclguvi.com** with a description of the issue, steps to
   reproduce, and its potential impact.
 - Alternatively, use [GitHub Security
-  Advisories](https://github.com/guvi-geek/hyrenet-flash/security/advisories/new)
+  Advisories](https://github.com/guvi-geek/flash/security/advisories/new)
   to report privately.
 
 We'll acknowledge your report as soon as possible and work with you on a fix

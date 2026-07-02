@@ -16,7 +16,7 @@ import (
 	"sync"
 	"time"
 
-	dk "github.com/guvi-geek/hyrenet-flash/internal/docker"
+	dk "github.com/guvi-geek/flash/internal/docker"
 )
 
 // QuestionConfig is the per-template pool + image configuration.
