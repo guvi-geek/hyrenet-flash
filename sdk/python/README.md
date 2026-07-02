@@ -1,9 +1,9 @@
 # Flash Python SDK
 
 Official Python SDK for the [Flash sandbox engine](../../README.md) — a
-self-hosted E2B/Daytona-style platform: claim an isolated sandbox from a warm
-pool in under 2 seconds, run commands, read/write files, open a live browser
-preview, and destroy it.
+self-hosted sandbox platform: claim an isolated sandbox from a warm pool in
+under 2 seconds, run commands, read/write files, open a live browser preview,
+and destroy it.
 
 ## Install
 
