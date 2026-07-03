@@ -11,7 +11,7 @@ import {
   submitSession,
   terminalSrc,
 } from "@/lib/api";
-import { relTime, shortId } from "@/lib/format";
+import { sessionExpiresText, shortId } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -128,7 +128,7 @@ export function SessionDetailSheet({ sessionId, onClose, onChanged }: Props) {
                 <span>·</span>
                 <span>{detail.question_id}</span>
                 <span>·</span>
-                <span>expires {relTime(detail.expires_at)}</span>
+                <span>expires {sessionExpiresText(detail.status, detail.expires_at)}</span>
               </div>
             </>
           )}
@@ -206,7 +206,7 @@ export function SessionDetailSheet({ sessionId, onClose, onChanged }: Props) {
                   <Row label="Session ID">
                     <span className="font-mono text-xs">{detail.session_id}</span>
                   </Row>
-                  <Row label="Expires">{relTime(detail.expires_at)}</Row>
+                  <Row label="Expires">{sessionExpiresText(detail.status, detail.expires_at)}</Row>
                   <Row label="App URL">
                     {detail.app_url ? (
                       <a

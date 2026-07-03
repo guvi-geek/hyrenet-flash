@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Session } from "@/lib/api";
-import { relTime, shortId } from "@/lib/format";
+import { relTime, sessionExpiresText, shortId } from "@/lib/format";
 import { StatusBadge } from "./status-badge";
 
 function Score({ s }: { s: Session }) {
@@ -74,7 +74,7 @@ export function SessionsTable({
                 <Score s={s} />
               </TableCell>
               <TableCell className="font-mono text-xs text-muted-foreground">{relTime(s.created_at)}</TableCell>
-              <TableCell className="font-mono text-xs text-muted-foreground">{relTime(s.expires_at)}</TableCell>
+              <TableCell className="font-mono text-xs text-muted-foreground">{sessionExpiresText(s.status, s.expires_at)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

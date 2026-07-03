@@ -10,6 +10,10 @@ export function relTime(ts?: string): string {
   return `${sign}${Math.round(a / 86400)}d${suf}`;
 }
 
+export function sessionExpiresText(status: string, expiresAt?: string): string {
+  return status === "ACTIVE" ? relTime(expiresAt) : "—";
+}
+
 export function shortId(id: string): string {
   return id.replace(/^[a-z]+_/, "").slice(0, 12);
 }
