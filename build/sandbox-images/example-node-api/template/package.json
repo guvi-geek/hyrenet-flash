@@ -1,0 +1,9 @@
+{
+  "name": "example-node-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Seed Flash template — zero-dependency Node stdlib HTTP API.",
+  "scripts": {
+    "dev": "node server.js"
+  }
+}

@@ -7,9 +7,13 @@ dashboard embedded in the orchestrator binary** — one binary is the whole
 product. On top of the generic engine sits the assessment layer (candidate
 sessions, submit → automated scoring) it was originally built for.
 
-> Setting up a local dev environment? See [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md).
-> Want to contribute? See [`CONTRIBUTING.md`](CONTRIBUTING.md). Curious what's
-> planned but not built yet? See [`ROADMAP.md`](ROADMAP.md).
+> New here? Start with [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) —
+> clone to running engine to first sandbox in five minutes. Adding a template?
+> See [`docs/TEMPLATES.md`](docs/TEMPLATES.md) (copy the seed at
+> [`build/sandbox-images/example-node-api/`](build/sandbox-images/example-node-api/)).
+> Full dev setup: [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md). Want to
+> contribute? See [`CONTRIBUTING.md`](CONTRIBUTING.md). Curious what's planned
+> but not built yet? See [`ROADMAP.md`](ROADMAP.md).
 
 ## SDKs
 
@@ -126,6 +130,11 @@ per-template `DEV_CMD`, everything else is identical:
 Templates are a runtime-mutable registry: more can be registered live via
 `POST /v1/templates` (the dashboard's "Create Template") without a restart —
 the orchestrator validates the image exists, then starts warming the new pool.
+
+> **Adding your own template?** Copy the seed at
+> [`build/sandbox-images/example-node-api/`](build/sandbox-images/example-node-api/)
+> and follow [`docs/TEMPLATES.md`](docs/TEMPLATES.md) — it covers the directory /
+> Dockerfile / scoring-harness contracts and how to build, register, and verify.
 
 ## Run it
 
