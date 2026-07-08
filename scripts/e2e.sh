@@ -5,6 +5,18 @@ set -euo pipefail
 
 BASE="${BASE:-http://127.0.0.1:8080}"
 
+# Check if Docker container exists, otherwise use local psql
+query_db() {
+  if docker ps --format '{{.Names}}' | grep -q 'flash-pg' 2>/dev/null; then
+    docker exec flash-pg psql -U postgres -d flash -t -A -F'|' -c "$1"
+  elif command -v psql >/dev/null 2>&1; then
+    psql -d flash -t -A -F'|' -c "$1"
+  else
+    echo "ERROR: Neither Docker (flash-pg) nor local psql available"
+    return 1
+  fi
+}
+
 echo ">> warm pool state"
 curl -fsS "${BASE}/v1/stats"; echo
 
@@ -29,8 +41,7 @@ curl -fsS -X POST "${BASE}/v1/sessions/${SID}/submit" \
 echo ">> waiting for score (scoring runs in a --network none container)"
 sleep 8
 echo ">> querying Postgres for the score"
-psql -d flash -t -A -F'|' -c \
-  "SELECT status, score, max_score FROM submissions WHERE session_id='${SID}';"
+query_db "SELECT status, score, max_score FROM submissions WHERE session_id='${SID}';"
 
 echo ">> pool replenished?"
 curl -fsS "${BASE}/v1/stats"; echo
