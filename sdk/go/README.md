@@ -43,3 +43,24 @@ containers — no mocks):
 FLASH_E2E=1 FLASH_BASE_URL=http://127.0.0.1:8090 FLASH_API_KEY=flash_… \
     go test ./... -v
 ```
+
+## API reference
+
+A generated, browsable API reference for every exported type and method lives
+at **https://guvi-geek.github.io/flash/** (published from `main` by the
+[`docs` workflow](../../.github/workflows/docs.yml)). It is produced with
+[Sourcey](https://sourcey.com)'s godoc adapter from a committed snapshot, so
+the site rebuilds without a local Go toolchain.
+
+Regenerate locally:
+
+```bash
+cd sdk/go
+npx sourcey godoc -m . -o godoc.json   # refresh the snapshot (needs Go)
+npx sourcey build                      # build the static site into ./dist (no Go required)
+```
+
+The reference is also available for free on
+[pkg.go.dev](https://pkg.go.dev/github.com/guvi-geek/flash/sdk/go) once the
+module is tagged; the Sourcey site adds a branded, unified home that can host
+both SDK references (Go and Python) side by side.
