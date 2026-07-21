@@ -1,0 +1,972 @@
+{
+  "schema_version": 1,
+  "source": "sourcey-godoc",
+  "module_path": "github.com/guvi-geek/flash/sdk/go",
+  "generated_at": "2026-07-20T12:42:16Z",
+  "packages": [
+    {
+      "importPath": "github.com/guvi-geek/flash/sdk/go",
+      "name": "flash",
+      "synopsis": "Package flash is the official Go SDK for the Flash sandbox engine — a self-hosted sandbox platform: claim an isolated sandbox from a warm pool in under 2 seconds, run commands in it, read and write its files, open its live preview, and destroy it.",
+      "doc": "Package flash is the official Go SDK for the Flash sandbox engine — a\nself-hosted sandbox platform: claim an isolated sandbox from a warm pool in\nunder 2 seconds, run commands in it, read and write its files, open its\nlive preview, and destroy it.\n\nQuick start:\n\n\tclient, err := flash.New() // FLASH_API_KEY + FLASH_BASE_URL from env\n\tsbx, err := client.Sandboxes.Create(ctx, flash.CreateSandboxOpts{Template: \"q1\"})\n\tdefer sbx.Kill(ctx)\n\tres, err := sbx.Run(ctx, \"node -e 'console.log(40+2)'\")\n\tfmt.Print(res.Stdout) // \"42\\n\"\n\nThe SDK is dependency-free (stdlib only) and every call is context-aware.",
+      "dir": ".",
+      "files": [
+        "apikeys.go",
+        "assessments.go",
+        "client.go",
+        "sandbox.go",
+        "templates.go"
+      ],
+      "consts": [],
+      "vars": [],
+      "funcs": [
+        {
+          "name": "IsNotFound",
+          "doc": "IsNotFound reports whether err is a 404 APIError.",
+          "signature": "func IsNotFound(err error) bool",
+          "position": {
+            "file": "client.go",
+            "line": 97
+          },
+          "examples": []
+        },
+        {
+          "name": "New",
+          "doc": "New builds a Client. The API key and base URL default from FLASH_API_KEY /\nFLASH_BASE_URL; an explicit Option wins. An empty API key is allowed only\nfor orchestrators running with AUTH_ENABLED=false.",
+          "signature": "func New(opts ...Option) (*Client, error)",
+          "position": {
+            "file": "client.go",
+            "line": 67
+          },
+          "examples": []
+        },
+        {
+          "name": "WithAPIKey",
+          "doc": "WithAPIKey sets the org API key (`flash_…`). Overrides FLASH_API_KEY.",
+          "signature": "func WithAPIKey(key string) Option",
+          "position": {
+            "file": "client.go",
+            "line": 56
+          },
+          "examples": []
+        },
+        {
+          "name": "WithBaseURL",
+          "doc": "WithBaseURL points the client at an orchestrator. Overrides FLASH_BASE_URL.",
+          "signature": "func WithBaseURL(u string) Option",
+          "position": {
+            "file": "client.go",
+            "line": 59
+          },
+          "examples": []
+        },
+        {
+          "name": "WithHTTPClient",
+          "doc": "WithHTTPClient swaps the underlying *http.Client (custom TLS, proxies, tracing).",
+          "signature": "func WithHTTPClient(h *http.Client) Option",
+          "position": {
+            "file": "client.go",
+            "line": 62
+          },
+          "examples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "APIError",
+          "doc": "APIError is a non-2xx response from the orchestrator.",
+          "declaration": "type APIError struct {\n\tStatusCode int\n\tMessage    string\n}",
+          "kind": "struct",
+          "position": {
+            "file": "client.go",
+            "line": 87
+          },
+          "fields": [
+            {
+              "name": "StatusCode",
+              "doc": "",
+              "type": "int"
+            },
+            {
+              "name": "Message",
+              "doc": "",
+              "type": "string"
+            }
+          ],
+          "methods": [
+            {
+              "name": "Error",
+              "doc": "",
+              "signature": "func  Error) Error() string",
+              "position": {
+                "file": "client.go",
+                "line": 92
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "APIKey",
+          "doc": "APIKey is one credential's metadata. The raw key exists only in\nCreatedAPIKey.Key at mint time; thereafter only the display prefix is shown.",
+          "declaration": "type APIKey struct {\n\tID         string     `json:\"id\"`\n\tName       string     `json:\"name\"`\n\tPrefix     string     `json:\"prefix\"`\n\tCreatedAt  time.Time  `json:\"created_at\"`\n\tLastUsedAt *time.Time `json:\"last_used_at,omitempty\"`\n}",
+          "kind": "struct",
+          "position": {
+            "file": "apikeys.go",
+            "line": 15
+          },
+          "fields": [
+            {
+              "name": "ID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"id\""
+            },
+            {
+              "name": "Name",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"name\""
+            },
+            {
+              "name": "Prefix",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"prefix\""
+            },
+            {
+              "name": "CreatedAt",
+              "doc": "",
+              "type": "time.Time",
+              "tag": "json:\"created_at\""
+            },
+            {
+              "name": "LastUsedAt",
+              "doc": "",
+              "type": "*time.Time",
+              "tag": "json:\"last_used_at,omitempty\""
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "APIKeyService",
+          "doc": "APIKeyService manages the org's API keys.",
+          "declaration": "type APIKeyService struct {\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "apikeys.go",
+            "line": 11
+          },
+          "fields": [],
+          "methods": [
+            {
+              "name": "Create",
+              "doc": "Create mints a new named key. Store the returned Key — it is unrecoverable.",
+              "signature": "func  Create(ctx context.Context, name string) (*CreatedAPIKey, error)",
+              "position": {
+                "file": "apikeys.go",
+                "line": 32
+              },
+              "examples": []
+            },
+            {
+              "name": "List",
+              "doc": "List returns the org's live keys.",
+              "signature": "func  List(ctx context.Context) ([]APIKey, error)",
+              "position": {
+                "file": "apikeys.go",
+                "line": 41
+              },
+              "examples": []
+            },
+            {
+              "name": "Revoke",
+              "doc": "Revoke disables a key immediately. Revoking the key this client is using is\nrefused by the server (409) — mint a replacement first.",
+              "signature": "func  Revoke(ctx context.Context, id string) error",
+              "position": {
+                "file": "apikeys.go",
+                "line": 51
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "AssessmentService",
+          "doc": "AssessmentService is the assessment layer on top of raw sandboxes:\nclaim a session for a candidate, hand them the playground/preview, then\nsubmit → snapshot → automated scoring. Everything a raw Sandbox can't do.",
+          "declaration": "type AssessmentService struct {\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "assessments.go",
+            "line": 14
+          },
+          "fields": [],
+          "methods": [
+            {
+              "name": "CreateSession",
+              "doc": "CreateSession claims a sandbox for a candidate. Hand Session.Token to the\ncandidate (it scopes them to this one session); keep your org key private.",
+              "signature": "func  CreateSession(ctx context.Context, opts CreateSessionOpts) (*Session, error)",
+              "position": {
+                "file": "assessments.go",
+                "line": 41
+              },
+              "examples": []
+            },
+            {
+              "name": "Destroy",
+              "doc": "Destroy tears the session down without scoring.",
+              "signature": "func  Destroy(ctx context.Context, id string) error",
+              "position": {
+                "file": "assessments.go",
+                "line": 71
+              },
+              "examples": []
+            },
+            {
+              "name": "GetSession",
+              "doc": "GetSession fetches a session by id (operator view, includes the token).",
+              "signature": "func  GetSession(ctx context.Context, id string) (*Session, error)",
+              "position": {
+                "file": "assessments.go",
+                "line": 61
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "Client",
+          "doc": "Client is the entry point. Construct with New; zero value is not usable.",
+          "declaration": "type Client struct {\n\n\t// Sandboxes creates and controls sandboxes (the core surface).\n\tSandboxes *SandboxService\n\t// Templates lists and registers sandbox templates.\n\tTemplates *TemplateService\n\t// APIKeys manages the org's API keys.\n\tAPIKeys *APIKeyService\n\t// Assessments is the assessment layer on top of sandboxes:\n\t// candidate sessions with submit → automated scoring.\n\tAssessments *AssessmentService\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "client.go",
+            "line": 36
+          },
+          "fields": [
+            {
+              "name": "Sandboxes",
+              "doc": "Sandboxes creates and controls sandboxes (the core surface).",
+              "type": "*SandboxService"
+            },
+            {
+              "name": "Templates",
+              "doc": "Templates lists and registers sandbox templates.",
+              "type": "*TemplateService"
+            },
+            {
+              "name": "APIKeys",
+              "doc": "APIKeys manages the org's API keys.",
+              "type": "*APIKeyService"
+            },
+            {
+              "name": "Assessments",
+              "doc": "Assessments is the assessment layer on top of sandboxes:\ncandidate sessions with submit → automated scoring.",
+              "type": "*AssessmentService"
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "CreateSandboxOpts",
+          "doc": "CreateSandboxOpts configures Sandboxes.Create.",
+          "declaration": "type CreateSandboxOpts struct {\n\t// Template is the template id to boot from (required), e.g. \"q1\".\n\tTemplate string\n\t// Timeout is how long the sandbox lives before auto-teardown. Zero means\n\t// the template's default. Extend later with SetTimeout.\n\tTimeout time.Duration\n\t// Metadata is attached to the sandbox and returned on get/list.\n\tMetadata map[string]string\n}",
+          "kind": "struct",
+          "position": {
+            "file": "sandbox.go",
+            "line": 45
+          },
+          "fields": [
+            {
+              "name": "Template",
+              "doc": "Template is the template id to boot from (required), e.g. \"q1\".",
+              "type": "string"
+            },
+            {
+              "name": "Timeout",
+              "doc": "Timeout is how long the sandbox lives before auto-teardown. Zero means\nthe template's default. Extend later with SetTimeout.",
+              "type": "time.Duration"
+            },
+            {
+              "name": "Metadata",
+              "doc": "Metadata is attached to the sandbox and returned on get/list.",
+              "type": "map[string]string"
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "CreateSessionOpts",
+          "doc": "CreateSessionOpts configures a candidate session claim.",
+          "declaration": "type CreateSessionOpts struct {\n\tCandidateID  string // required — who is being assessed\n\tQuestionID   string // required — the template/question id\n\tAssessmentID string\n\tTimeLimit    time.Duration // zero = template default\n}",
+          "kind": "struct",
+          "position": {
+            "file": "assessments.go",
+            "line": 32
+          },
+          "fields": [
+            {
+              "name": "CandidateID",
+              "doc": "required — who is being assessed",
+              "type": "string"
+            },
+            {
+              "name": "QuestionID",
+              "doc": "required — the template/question id",
+              "type": "string"
+            },
+            {
+              "name": "AssessmentID",
+              "doc": "",
+              "type": "string"
+            },
+            {
+              "name": "TimeLimit",
+              "doc": "zero = template default",
+              "type": "time.Duration"
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "CreatedAPIKey",
+          "doc": "CreatedAPIKey is the mint response — Key is shown exactly once.",
+          "declaration": "type CreatedAPIKey struct {\n\tID     string `json:\"id\"`\n\tName   string `json:\"name\"`\n\tPrefix string `json:\"prefix\"`\n\tKey    string `json:\"key\"`\n}",
+          "kind": "struct",
+          "position": {
+            "file": "apikeys.go",
+            "line": 24
+          },
+          "fields": [
+            {
+              "name": "ID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"id\""
+            },
+            {
+              "name": "Name",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"name\""
+            },
+            {
+              "name": "Prefix",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"prefix\""
+            },
+            {
+              "name": "Key",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"key\""
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "ExecOpts",
+          "doc": "ExecOpts tunes a command run.",
+          "declaration": "type ExecOpts struct {\n\t// Cwd is relative to the sandbox work dir (default: the work dir itself).\n\tCwd string\n\t// Env adds KEY=VALUE pairs for this command only.\n\tEnv map[string]string\n\t// Timeout bounds the command (server default 60s, max 5m).\n\tTimeout time.Duration\n}",
+          "kind": "struct",
+          "position": {
+            "file": "sandbox.go",
+            "line": 143
+          },
+          "fields": [
+            {
+              "name": "Cwd",
+              "doc": "Cwd is relative to the sandbox work dir (default: the work dir itself).",
+              "type": "string"
+            },
+            {
+              "name": "Env",
+              "doc": "Env adds KEY=VALUE pairs for this command only.",
+              "type": "map[string]string"
+            },
+            {
+              "name": "Timeout",
+              "doc": "Timeout bounds the command (server default 60s, max 5m).",
+              "type": "time.Duration"
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "ExecResult",
+          "doc": "ExecResult is one command's outcome. A non-zero ExitCode is a normal result,\nnot a Go error — transport failures and timeouts are errors.",
+          "declaration": "type ExecResult struct {\n\tStdout   string `json:\"stdout\"`\n\tStderr   string `json:\"stderr\"`\n\tExitCode int    `json:\"exit_code\"`\n\tDuration time.Duration\n}",
+          "kind": "struct",
+          "position": {
+            "file": "sandbox.go",
+            "line": 135
+          },
+          "fields": [
+            {
+              "name": "Stdout",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"stdout\""
+            },
+            {
+              "name": "Stderr",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"stderr\""
+            },
+            {
+              "name": "ExitCode",
+              "doc": "",
+              "type": "int",
+              "tag": "json:\"exit_code\""
+            },
+            {
+              "name": "Duration",
+              "doc": "",
+              "type": "time.Duration"
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "FileService",
+          "doc": "FileService reads and writes files inside one sandbox's work dir. All paths\nare relative to the work dir; traversal outside it is rejected server-side.",
+          "declaration": "type FileService struct {\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "sandbox.go",
+            "line": 195
+          },
+          "fields": [],
+          "methods": [
+            {
+              "name": "Delete",
+              "doc": "Delete removes a file or directory.",
+              "signature": "func  Delete(ctx context.Context, path string) error",
+              "position": {
+                "file": "sandbox.go",
+                "line": 230
+              },
+              "examples": []
+            },
+            {
+              "name": "List",
+              "doc": "List returns every file under the work dir, as relative paths.",
+              "signature": "func  List(ctx context.Context) ([]string, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 198
+              },
+              "examples": []
+            },
+            {
+              "name": "Read",
+              "doc": "Read returns a file's contents.",
+              "signature": "func  Read(ctx context.Context, path string) ([]byte, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 207
+              },
+              "examples": []
+            },
+            {
+              "name": "Write",
+              "doc": "Write creates or replaces a file (parent directories are created).",
+              "signature": "func  Write(ctx context.Context, path string, content []byte) error",
+              "position": {
+                "file": "sandbox.go",
+                "line": 218
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "Option",
+          "doc": "Option configures a Client.",
+          "declaration": "type Option func(*Client)",
+          "kind": "defined",
+          "position": {
+            "file": "client.go",
+            "line": 53
+          },
+          "fields": [],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "Sandbox",
+          "doc": "Sandbox is a live (or past) isolated environment. Obtain one via\nSandboxes.Create, Sandboxes.Connect, or Sandboxes.List; then use its methods\nto run commands and manage files. Fields are a snapshot from the last API\ncall that produced it.",
+          "declaration": "type Sandbox struct {\n\tID         string            `json:\"sandbox_id\"`\n\tTemplateID string            `json:\"template_id\"`\n\tState      string            `json:\"state\"` // \"running\" | \"submitted\" | \"timed_out\" | \"destroyed\"\n\tCreatedAt  time.Time         `json:\"created_at\"`\n\tExpiresAt  time.Time         `json:\"expires_at\"`\n\tMetadata   map[string]string `json:\"metadata\"`\n\n\t// AppURL is the sandbox's dev server (http://host:port), reachable while\n\t// running. For frontend templates prefer PreviewURL in a browser.\n\tAppURL string `json:\"app_url\"`\n\t// PreviewURL is the authenticated browser preview (frontend templates only).\n\tPreviewURL string `json:\"preview_url\"`\n\t// TerminalURL is the raw PTY WebSocket; TerminalPage is an embeddable\n\t// xterm.js page served by the orchestrator.\n\tTerminalURL  string `json:\"terminal_url\"`\n\tTerminalPage string `json:\"terminal_page\"`\n\t// Token is the per-sandbox credential for the candidate plane (terminal,\n\t// preview, submit). Keep it server-side; hand it only to the end user of\n\t// THIS sandbox.\n\tToken string `json:\"token\"`\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "sandbox.go",
+            "line": 19
+          },
+          "fields": [
+            {
+              "name": "ID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"sandbox_id\""
+            },
+            {
+              "name": "TemplateID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"template_id\""
+            },
+            {
+              "name": "State",
+              "doc": "\"running\" | \"submitted\" | \"timed_out\" | \"destroyed\"",
+              "type": "string",
+              "tag": "json:\"state\""
+            },
+            {
+              "name": "CreatedAt",
+              "doc": "",
+              "type": "time.Time",
+              "tag": "json:\"created_at\""
+            },
+            {
+              "name": "ExpiresAt",
+              "doc": "",
+              "type": "time.Time",
+              "tag": "json:\"expires_at\""
+            },
+            {
+              "name": "Metadata",
+              "doc": "",
+              "type": "map[string]string",
+              "tag": "json:\"metadata\""
+            },
+            {
+              "name": "AppURL",
+              "doc": "AppURL is the sandbox's dev server (http://host:port), reachable while\nrunning. For frontend templates prefer PreviewURL in a browser.",
+              "type": "string",
+              "tag": "json:\"app_url\""
+            },
+            {
+              "name": "PreviewURL",
+              "doc": "PreviewURL is the authenticated browser preview (frontend templates only).",
+              "type": "string",
+              "tag": "json:\"preview_url\""
+            },
+            {
+              "name": "TerminalURL",
+              "doc": "TerminalURL is the raw PTY WebSocket; TerminalPage is an embeddable\nxterm.js page served by the orchestrator.",
+              "type": "string",
+              "tag": "json:\"terminal_url\""
+            },
+            {
+              "name": "TerminalPage",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"terminal_page\""
+            },
+            {
+              "name": "Token",
+              "doc": "Token is the per-sandbox credential for the candidate plane (terminal,\npreview, submit). Keep it server-side; hand it only to the end user of\nTHIS sandbox.",
+              "type": "string",
+              "tag": "json:\"token\""
+            }
+          ],
+          "methods": [
+            {
+              "name": "Exec",
+              "doc": "Exec executes an argv directly (no shell interpretation).",
+              "signature": "func  Exec(ctx context.Context, argv []string, opts ...ExecOpts) (*ExecResult, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 158
+              },
+              "examples": []
+            },
+            {
+              "name": "Files",
+              "doc": "Files accesses the sandbox filesystem (the writable work dir).",
+              "signature": "func  Files() *FileService",
+              "position": {
+                "file": "sandbox.go",
+                "line": 191
+              },
+              "examples": []
+            },
+            {
+              "name": "Kill",
+              "doc": "Kill destroys the sandbox immediately. Idempotent.",
+              "signature": "func  Kill(ctx context.Context) error",
+              "position": {
+                "file": "sandbox.go",
+                "line": 116
+              },
+              "examples": []
+            },
+            {
+              "name": "Refresh",
+              "doc": "Refresh re-fetches the sandbox's state from the orchestrator in place.",
+              "signature": "func  Refresh(ctx context.Context) error",
+              "position": {
+                "file": "sandbox.go",
+                "line": 104
+              },
+              "examples": []
+            },
+            {
+              "name": "Run",
+              "doc": "Run executes a shell command line (via `sh -c`) in the sandbox.",
+              "signature": "func  Run(ctx context.Context, command string, opts ...ExecOpts) (*ExecResult, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 153
+              },
+              "examples": []
+            },
+            {
+              "name": "SetTimeout",
+              "doc": "SetTimeout resets the sandbox's lifetime to now+d (keep-alive).",
+              "signature": "func  SetTimeout(ctx context.Context, d time.Duration) error",
+              "position": {
+                "file": "sandbox.go",
+                "line": 121
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "SandboxService",
+          "doc": "SandboxService creates, lists, and connects to sandboxes.",
+          "declaration": "type SandboxService struct {\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "sandbox.go",
+            "line": 13
+          },
+          "fields": [],
+          "methods": [
+            {
+              "name": "Connect",
+              "doc": "Connect attaches to an existing sandbox by id.",
+              "signature": "func  Connect(ctx context.Context, id string) (*Sandbox, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 76
+              },
+              "examples": []
+            },
+            {
+              "name": "Create",
+              "doc": "Create claims a sandbox — warm-pool hit in well under 2s, cold boot otherwise.",
+              "signature": "func  Create(ctx context.Context, opts CreateSandboxOpts) (*Sandbox, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 56
+              },
+              "examples": []
+            },
+            {
+              "name": "List",
+              "doc": "List returns the org's sandboxes, newest first. runningOnly narrows to live ones.",
+              "signature": "func  List(ctx context.Context, runningOnly bool) ([]*Sandbox, error)",
+              "position": {
+                "file": "sandbox.go",
+                "line": 86
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "Session",
+          "doc": "Session is a candidate's assessment sandbox.",
+          "declaration": "type Session struct {\n\tID          string    `json:\"session_id\"`\n\tToken       string    `json:\"session_token\"`\n\tCandidateID string    `json:\"candidate_id\"`\n\tQuestionID  string    `json:\"question_id\"`\n\tStatus      string    `json:\"status\"`\n\tAppURL      string    `json:\"app_url\"`\n\tPreviewURL  string    `json:\"preview_url\"`\n\tTerminalURL string    `json:\"terminal_url\"`\n\tExpiresAt   time.Time `json:\"expires_at\"`\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "assessments.go",
+            "line": 17
+          },
+          "fields": [
+            {
+              "name": "ID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"session_id\""
+            },
+            {
+              "name": "Token",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"session_token\""
+            },
+            {
+              "name": "CandidateID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"candidate_id\""
+            },
+            {
+              "name": "QuestionID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"question_id\""
+            },
+            {
+              "name": "Status",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"status\""
+            },
+            {
+              "name": "AppURL",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"app_url\""
+            },
+            {
+              "name": "PreviewURL",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"preview_url\""
+            },
+            {
+              "name": "TerminalURL",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"terminal_url\""
+            },
+            {
+              "name": "ExpiresAt",
+              "doc": "",
+              "type": "time.Time",
+              "tag": "json:\"expires_at\""
+            }
+          ],
+          "methods": [
+            {
+              "name": "Result",
+              "doc": "Result returns the latest submission's score. ok=false while nothing has\nbeen submitted yet.",
+              "signature": "func  Result(ctx context.Context) (*Submission, bool, error)",
+              "position": {
+                "file": "assessments.go",
+                "line": 109
+              },
+              "examples": []
+            },
+            {
+              "name": "Submit",
+              "doc": "Submit snapshots the candidate's work, destroys the sandbox, and starts\nscoring. Authenticated by the session token (candidate credential).",
+              "signature": "func  Submit(ctx context.Context) (*Submission, error)",
+              "position": {
+                "file": "assessments.go",
+                "line": 85
+              },
+              "examples": []
+            },
+            {
+              "name": "WaitForScore",
+              "doc": "WaitForScore polls Result until scoring completes or ctx expires.",
+              "signature": "func  WaitForScore(ctx context.Context) (*Submission, error)",
+              "position": {
+                "file": "assessments.go",
+                "line": 128
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        },
+        {
+          "name": "Submission",
+          "doc": "Submission is a scored (or in-flight) submission.",
+          "declaration": "type Submission struct {\n\tSubmissionID string `json:\"submission_id\"`\n\tStatus       string `json:\"status\"` // \"scoring\" | \"scored\" | \"error\" | …\n\tScore        int    `json:\"score\"`\n\tMaxScore     int    `json:\"max_score\"`\n}",
+          "kind": "struct",
+          "position": {
+            "file": "assessments.go",
+            "line": 76
+          },
+          "fields": [
+            {
+              "name": "SubmissionID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"submission_id\""
+            },
+            {
+              "name": "Status",
+              "doc": "\"scoring\" | \"scored\" | \"error\" | …",
+              "type": "string",
+              "tag": "json:\"status\""
+            },
+            {
+              "name": "Score",
+              "doc": "",
+              "type": "int",
+              "tag": "json:\"score\""
+            },
+            {
+              "name": "MaxScore",
+              "doc": "",
+              "type": "int",
+              "tag": "json:\"max_score\""
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "Template",
+          "doc": "Template is a sandbox image + its pool/resource config.",
+          "declaration": "type Template struct {\n\tID          string  `json:\"id\"`\n\tSlug        string  `json:\"slug,omitempty\"`\n\tTitle       string  `json:\"title,omitempty\"`\n\tLanguage    string  `json:\"language,omitempty\"`\n\tDescription string  `json:\"description,omitempty\"`\n\tImage       string  `json:\"image\"`\n\tMinWarm     int     `json:\"min_warm\"`\n\tVCPU        float64 `json:\"vcpu,omitempty\"`\n\tMemoryMB    int     `json:\"memory_mb,omitempty\"`\n\tPidsLimit   int     `json:\"pids_limit,omitempty\"`\n\t// Kind is \"api\" or \"frontend\" (frontend templates get a browser preview).\n\tKind   string `json:\"kind\"`\n\tDevCmd string `json:\"dev_cmd,omitempty\"`\n\t// Warm is the live warm-pool depth (list only).\n\tWarm int `json:\"warm,omitempty\"`\n}",
+          "kind": "struct",
+          "position": {
+            "file": "templates.go",
+            "line": 14
+          },
+          "fields": [
+            {
+              "name": "ID",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"id\""
+            },
+            {
+              "name": "Slug",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"slug,omitempty\""
+            },
+            {
+              "name": "Title",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"title,omitempty\""
+            },
+            {
+              "name": "Language",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"language,omitempty\""
+            },
+            {
+              "name": "Description",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"description,omitempty\""
+            },
+            {
+              "name": "Image",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"image\""
+            },
+            {
+              "name": "MinWarm",
+              "doc": "",
+              "type": "int",
+              "tag": "json:\"min_warm\""
+            },
+            {
+              "name": "VCPU",
+              "doc": "",
+              "type": "float64",
+              "tag": "json:\"vcpu,omitempty\""
+            },
+            {
+              "name": "MemoryMB",
+              "doc": "",
+              "type": "int",
+              "tag": "json:\"memory_mb,omitempty\""
+            },
+            {
+              "name": "PidsLimit",
+              "doc": "",
+              "type": "int",
+              "tag": "json:\"pids_limit,omitempty\""
+            },
+            {
+              "name": "Kind",
+              "doc": "Kind is \"api\" or \"frontend\" (frontend templates get a browser preview).",
+              "type": "string",
+              "tag": "json:\"kind\""
+            },
+            {
+              "name": "DevCmd",
+              "doc": "",
+              "type": "string",
+              "tag": "json:\"dev_cmd,omitempty\""
+            },
+            {
+              "name": "Warm",
+              "doc": "Warm is the live warm-pool depth (list only).",
+              "type": "int",
+              "tag": "json:\"warm,omitempty\""
+            }
+          ],
+          "methods": [],
+          "examples": []
+        },
+        {
+          "name": "TemplateService",
+          "doc": "TemplateService lists and registers sandbox templates.",
+          "declaration": "type TemplateService struct {\n\t// contains filtered or unexported fields\n}",
+          "kind": "struct",
+          "position": {
+            "file": "templates.go",
+            "line": 11
+          },
+          "fields": [],
+          "methods": [
+            {
+              "name": "Create",
+              "doc": "Create registers a new template at runtime; the orchestrator validates the\nimage exists and starts warming the pool immediately.",
+              "signature": "func  Create(ctx context.Context, t Template) (*Template, error)",
+              "position": {
+                "file": "templates.go",
+                "line": 41
+              },
+              "examples": []
+            },
+            {
+              "name": "List",
+              "doc": "List returns all registered templates with their live warm depth.",
+              "signature": "func  List(ctx context.Context) ([]Template, error)",
+              "position": {
+                "file": "templates.go",
+                "line": 33
+              },
+              "examples": []
+            },
+            {
+              "name": "Scale",
+              "doc": "Scale sets a template's warm-pool floor at runtime (the pre-warm knob).",
+              "signature": "func  Scale(ctx context.Context, id string, minWarm int) error",
+              "position": {
+                "file": "templates.go",
+                "line": 50
+              },
+              "examples": []
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "examples": []
+    }
+  ]
+}
